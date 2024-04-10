@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: .
+    networks:
+      - backend-network
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongodb
+  mongodb:
+    image: 'mongo:latest'
+    networks:
+      - backend-network
+    environment:
+      - 'MONGO_INITDB_ROOT_USERNAME=root'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+      - 'MONGO_INITDB_DATABASE=MusicShare'
+    ports:
+      - '27017:27017'
+networks:
+  backend-network:
+    driver: bridge
